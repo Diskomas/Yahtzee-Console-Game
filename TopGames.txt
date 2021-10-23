@@ -1,0 +1,6 @@
+Iron*Man,56,
+Hulk,54,
+Thor,49,
+Black*Widow,32,
+Hawkeye,23,
+Captain*America,16,
