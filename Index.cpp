@@ -7,10 +7,19 @@ using namespace std;
 #include <algorithm>
 
 
-static void Yahtzee_Menu(), MemberLogin(), Game(), MemberMenu();
+static void Yahtzee_Menu(), MemberLogin(), Game(), MemberMenu(), Yahtzee_Menu2();
 int* SessionID; // for sessionID
-
+string* Members; // cstring 
 int main() {
+    // TESTING
+
+    
+
+    // TESTING
+
+
+
+
     //  APPLICAITON CONFIG
 
     srand(time(NULL));
@@ -19,7 +28,8 @@ int main() {
 
     int Menu_Selection;
     do {
-        Yahtzee_Menu();
+        //Yahtzee_Menu();
+        Yahtzee_Menu2();
         cout << "\n   Please enter your selection: "; cin >> Menu_Selection;
 
         switch (Menu_Selection)
@@ -103,14 +113,85 @@ static void Yahtzee_Menu() {
     delete(scoreData);
     scoreData= nullptr;
 
+    
+
     cout << "   o8========8o    o8============8o    o8=================8o    o8================8o     o8========8o" << endl;
     cout << " (1) | PLAY |    (2) | REGISTER |    (3) | DELETE PLAYER |    (4) | SORT PLAYERS |     (9) | EXIT |  " << endl;
     cout << "   o8========8o    o8============8o    o8=================8o    o8================8o     o8========8o" << endl;
 
 }
 
+static void Yahtzee_Menu2() {
+    cout << "   o8=============================================================================================8o" << endl;
+    cout << "\t        __  __     ______     __  __     ______   ______     ______     ______    " << endl;
+    cout << "\t       /\\ \\_\\ \\   /\\  __ \\   /\\ \\_\\ \\   /\\__  _\\ /\\___  \\   /\\  ___\\   /\\  ___\\   " << endl;
+    cout << "\t       \\ \\____ \\  \\ \\  __ \\  \\ \\  __ \\  \\/_/\\ \\/ \\/_/  /__  \\ \\  __\\   \\ \\  __\\   " << endl;
+    cout << "\t        \\/\\_____\\  \\ \\_\\ \\_\\  \\ \\_\\ \\_\\    \\ \\_\\   /\\_____\\  \\ \\_____\\  \\ \\_____\\ " << endl;
+    cout << "\t         \\/_____/   \\/_/\\/_/   \\/_/\\/_/     \\/_/   \\/_____/   \\/_____/   \\/_____/ " << endl;
+    cout << "\n\n       By: Mantas Tamasauskas          Student ID: 30029478\n   o8=============================================================================================8o" << endl;
+
+    vector<string>* MembersData = new vector<string>;
+    Database* MemberData = new Database("", "Members_v2.txt");
+
+    MemberData->Members(MembersData);
+    delete MemberData;
+
+    //const int ArraySize = MembersData->size() - 1;
+    //string* UserData = new string[2][2];// = new char[MembersData->size() - 1];
+
+    //string** arr= new string * [MembersData->size() - 1];
+    //char* y = new char[5][2];
+
+    //const int size = const_cast<const int&>(MembersData->size());
+    //string* str[size][5];
+
+    int ArraySize = MembersData->size() - 1, x = 0;
+    Members = new string[ArraySize * 3]; // C-STRING as requested by the brief   // USE CHAR!!!!!!!!!!!!!!!
+  
+
+
+    cout << "\t\t\t\t                 o--o0o--o              " << endl;
+    cout << "\t\t\t\t   8=8==========LEADERBOARD==========8=8" << endl;
+    cout << "\t\t\t\t    |  NAME                    SCORE  | " << endl;
+    cout << "\t\t\t\t    |                                 | " << endl;
+    for (int i = 0; i < ArraySize; i += 4) {
+        *(Members + x * 3 + 0) = MembersData->at(i); // memberID
+        *(Members + x * 3 + 1) = MembersData->at(i + 1); // Username
+        string MemberPassword = MembersData->at(i + 2);
+
+        for (int i = 0; (i < 20 && MemberPassword[i] != '\0'); i++) // password decryption
+            MemberPassword[i] = MemberPassword[i] - 3;
+
+        *(Members + x * 3 + 2) = MemberPassword;
+        x++;
+
+        int inicialPosition = 26 - size(MembersData->at(i + 1)); // calculate number of spaces needed
+
+        cout << "\t\t\t\t    | " << MembersData->at(i + 1); // display username
+
+        for (int x = 0; x <= inicialPosition; x++) { cout << " "; } // disoplay spaces
+
+        cout << MembersData->at(i + 3) << "   | " << endl; // display score !can be imroved here!
+    }
+    cout << "\t\t\t\t    |                                 | " << endl;
+    cout << "\t\t\t\t   8=8==========LEADERBOARD==========8=8" << "\n\n";
+
+    delete(MembersData);
+    MembersData = nullptr;
+
+    cout << "   o8========8o    o8============8o    o8=================8o    o8================8o     o8========8o" << endl;
+    cout << " (1) | PLAY |    (2) | REGISTER |    (3) | DELETE PLAYER |    (4) | SORT PLAYERS |     (9) | EXIT |  " << endl;
+    cout << "   o8========8o    o8============8o    o8=================8o    o8================8o     o8========8o" << endl;
+    // USE C-STRING "Members" TO FUTHER TAKE THE APPLICATION (TO LOGIN / DELETE / SORT PLAYERS)
+}
+
 static void MemberLogin() {
-    
+
+    SessionID = (int*)malloc(sizeof(int) * 1);
+
+
+
+    /*
     SessionID = (int*)malloc(sizeof(int) * 1);
     Database* MemberData = new Database("", "Members.txt");
     string Mem_Username, Mem_Password;
@@ -131,6 +212,7 @@ static void MemberLogin() {
         SessionID = nullptr;
     }
     delete MemberData;
+    */
 }
 
 static void MemberMenu() {

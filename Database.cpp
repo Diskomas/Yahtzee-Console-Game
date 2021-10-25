@@ -34,7 +34,7 @@ void Database::Read(vector<string>* data) {
 	}
 	Data.close();
 }
-
+/*
 bool Database::MemberLogin(int* sessionID,string Username, string Password) {
 	string dbRecord, saveSession;
 	ifstream Data(this->path + this->filename);
@@ -72,32 +72,52 @@ bool Database::MemberLogin(int* sessionID,string Username, string Password) {
 	Data.close();
 	return false;
 }
+*/
 
-string Database::Write() {
-	return "";
+
+
+
+void Database::Members(vector<string>* data) {
+
+	string Record;
+	ifstream Data(this->path + this->filename);
+
+	if (Data.is_open()) {
+		while (getline(Data, Record, ',')) { // read csv files
+			Record.erase(remove(Record.begin(), Record.end(), '\n'), Record.end());
+			replace(Record.begin(), Record.end(), '*', ' '); //special way of assigning spaces in records
+			data->push_back(Record); // push data on vector
+		}
+	}
+	else {
+		cout << "Fail to read database table" << endl;
+	}
+	Data.close();
+}
+	
+
+bool Database::MemberLogin(string* Users, int* SessionID, string Username, string Password) {
+	int i = 0;
+	while (!Users[i].empty()) {
+		
+		if (Username == *(Users + i * 3 + 1) && Password == *(Users + i * 3 + 2)) {
+			string SessionID = *(Users + i * 3 + 0);
+			SessionID[0] = stoi(SessionID);
+		}
+		i++;
+	}
+	cout << "Records not found in the database!";
 }
 
+	string Database::Write() {
+		return "";
+	}
 
-//string temp;
-//if (counter < vectorSize) {
-//	temp += myText;
-//}
-//else {
-//
-//	data->push_back(myText);
-//}
-//
-//counter++;
+/*
+ENCRYPTION
 
-//while (Data >> myName >> myText) {
-//
-//	replace(myName.begin(), myName.end(), '*', ' ');
-//	cout << myName << "\t" << myText << endl;
-//}
+for(i = 0; (i < 100 && str[i] != '\0'); i++)
+			str[i] = str[i] + 3;
 
-//if (tableSize == 2) {
-			//	getline(Data, Text2);
-			//	data[lineCounter] = { Text , Text2 };
-			//}
 
-			//lineCounter++;
+*/

@@ -11,8 +11,12 @@ public:
 	Database(string path, string filename);
 	~Database();
 
+	// attempt 1:
 	void Read(vector<string>* data);
-	bool MemberLogin(int* sessionID, string Username, string Password);
+	//bool MemberLogin(int* sessionID, string Username, string Password);
+	// attempt 2:
+	void Members(vector<string>* data);
+	bool MemberLogin(string* Users, int* SessionID, string Username, string Password);
 	string Write();
 
 private:
