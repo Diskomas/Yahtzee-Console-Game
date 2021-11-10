@@ -103,10 +103,12 @@ bool Database::MemberLogin(string* Users, int* SessionID, string Username, strin
 		if (Username == *(Users + i * 3 + 1) && Password == *(Users + i * 3 + 2)) {
 			string SessionID = *(Users + i * 3 + 0);
 			SessionID[0] = stoi(SessionID);
+			return true;
 		}
 		i++;
 	}
 	cout << "Records not found in the database!";
+	return false;
 }
 
 	string Database::Write() {

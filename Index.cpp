@@ -5,11 +5,14 @@ using namespace std;
 #include <vector>
 #include <charconv>
 #include <algorithm>
+#include <numeric>
 
 
-static void Yahtzee_Menu(), MemberLogin(), Game(), MemberMenu(), Yahtzee_Menu2();
+static void Yahtzee_Menu(), MemberLogin(), Game(), MemberMenu(), Yahtzee_Menu2(), SimpleCard(string(&Cards)[5], int RolledNumber, bool Occupation);
 int* SessionID; // for sessionID
 string* Members; // cstring 
+
+
 int main() {
     // TESTING
 
@@ -35,6 +38,9 @@ int main() {
         switch (Menu_Selection)
         {
         case 1:
+            Game();
+            break;
+            // testing
             if (SessionID != nullptr) {MemberMenu();}
             else {MemberLogin();}
             if (SessionID != nullptr) { MemberMenu(); }
@@ -247,37 +253,110 @@ static void MemberMenu() {
 
 static void Game() {
 
-    int Difficulty = 6; // dice rolls
+    const int Difficulty = 6; // dice rolls
 
-   // int SCORECARD[Difficulty];
+    int SCORECARD[Difficulty];
 
     for (int x = 0; x < Difficulty; x++) {
         cout << " Dice Roll Set #"<< (x + 1) <<" of "<< Difficulty <<"\n";
         cout << "-------------------\n\n";
         cout << "--- SCORECARD ---\n";
 
-
-
+        cout << "\t Aces: " << SCORECARD[0] << "\n";
+        cout << "\t Twos: " << SCORECARD[1] << "\n";
+        cout << "\t Threes: " << SCORECARD[2] << "\n";
+        cout << "\t Fours: " << SCORECARD[3] << "\n";
+        cout << "\t Fives: " << SCORECARD[4] << "\n";
+        cout << "\t Sixes: " << SCORECARD[5] << "\n";
+        cout << "-----------------\n";
+        int Total = 0;
+        accumulate(SCORECARD, SCORECARD + Difficulty, Total);
+        cout << "Total: " << Total << "\n";
+        cout << "-----------------\n";
 
         int Dices[2][5];
+        string CardFaces[5];
 
         for (int rolls = 0; rolls < 3; rolls++) {
 
             for (int i = 0; i < 5; i++) {
                 if (Dices[1][i] != 1) {
                     Dices[0][i] = rand() % 6 + 1;
+                    SimpleCard(CardFaces, Dices[0][i], false); // create a separate loop to only print dices 
                 }
-
-                // print the dices 
-
-                // ask for locking any dices
-                // example :
-                Dices[1][1] = 1; // means its locked and will not be remplaced
-
+                else {
+                    SimpleCard(CardFaces, Dices[0][i], true);
+                }
             }
+
+            cout << "Roll #" << rolls + 1 << "\n";
+
+            cout << CardFaces[0] << "\n";
+            cout << CardFaces[1] << "\n";
+            cout << CardFaces[2] << "\n";
+            cout << CardFaces[3] << "\n";
+            cout << CardFaces[4] << "\n";
+
+            fill_n(CardFaces, 5, "");
+            int LockSelection;
+
+            cout << "\n\n Enter card to lock or skip(0): ";
+            cin >> LockSelection;
+            while (LockSelection != 0) {
+                Dices[1][LockSelection-1] = 1;
+                cin >> LockSelection;
+            }
+
+
         }
 
-        // select to store against something
-        // continue with the next round
+        cout << "";
+    }
+}
+
+static void SimpleCard(string (&Cards)[5], int RolledNumber, bool Occupation) {
+    if (Occupation) {
+        Cards[0].append("o8=====8o\t");
+        Cards[4].append("o8=====8o\t");
+    }
+    else {
+        Cards[0].append(".-------.\t");
+        Cards[4].append("'-------'\t");
+    }
+    switch (RolledNumber)
+    {
+        
+    case 1:
+        Cards[1].append("|       |\t");
+        Cards[2].append("|   *   |\t");
+        Cards[3].append("|       |\t");
+        break;
+    case 2:
+        Cards[1].append("| *     |\t");
+        Cards[2].append("|       |\t");
+        Cards[3].append("|     * |\t");
+        break;
+    case 3:
+        Cards[1].append("| *     |\t");
+        Cards[2].append("|   *   |\t");
+        Cards[3].append("|     * |\t");
+        break;
+    case 4:
+        Cards[1].append("| *   * |\t");
+        Cards[2].append("|       |\t");
+        Cards[3].append("| *   * |\t");
+        break;
+    case 5:
+        Cards[1].append("| *   * |\t");
+        Cards[2].append("|   *   |\t");
+        Cards[3].append("| *   * |\t");
+        break;
+    case 6:
+        Cards[1].append("| *   * |\t");
+        Cards[2].append("| *   * |\t");
+        Cards[3].append("| *   * |\t");
+        break;
+    default:
+        break;
     }
 }
