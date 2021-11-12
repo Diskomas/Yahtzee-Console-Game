@@ -21,7 +21,6 @@ void Database::Read(vector<string>* data) {
 
 	string Record;
 	ifstream Data(this->path + this->filename);
-
 	if (Data.is_open()) {
 		while (getline(Data, Record, ',')) {
 			Record.erase(std::remove(Record.begin(), Record.end(), '\n'), Record.end());

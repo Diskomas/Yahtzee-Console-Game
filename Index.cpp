@@ -1,12 +1,11 @@
 #include <iostream>
-using namespace std;
-#include <iostream>
 #include "Database.h"
+#include "Yahtzee.h"
 #include <vector>
 #include <charconv>
 #include <algorithm>
 #include <numeric>
-
+using namespace std;
 
 static void Yahtzee_Menu(), MemberLogin(), Game(), MemberMenu(), Yahtzee_Menu2(), SimpleCard(string(&Cards)[5], int RolledNumber, bool Occupation);
 int* SessionID; // for sessionID
@@ -14,14 +13,6 @@ string* Members; // cstring
 
 
 int main() {
-    // TESTING
-
-    
-
-    // TESTING
-
-
-
 
     //  APPLICAITON CONFIG
 
@@ -31,14 +22,19 @@ int main() {
 
     int Menu_Selection;
     do {
-        //Yahtzee_Menu();
         Yahtzee_Menu2();
         cout << "\n   Please enter your selection: "; cin >> Menu_Selection;
+
+
+        Yahtzee* Play = new Yahtzee();
+        Play->Play();
 
         switch (Menu_Selection)
         {
         case 1:
-            Game();
+            
+
+            //Game();
             break;
             // testing
             if (SessionID != nullptr) {MemberMenu();}
@@ -137,7 +133,7 @@ static void Yahtzee_Menu2() {
     cout << "\n\n       By: Mantas Tamasauskas          Student ID: 30029478\n   o8=============================================================================================8o" << endl;
 
     vector<string>* MembersData = new vector<string>;
-    Database* MemberData = new Database("", "Members_v2.txt");
+    Database* MemberData = new Database("C:\\Users\\disko\\OneDrive\\Documents\\1. Sheffiled Hallam University\\Year 2\\ADVANCED PROGRAMMING\\Assessment\\Application\\Yahtzee_Game\\Database\\", "Members_v2.txt");
 
     MemberData->Members(MembersData);
     delete MemberData;
@@ -155,8 +151,8 @@ static void Yahtzee_Menu2() {
     Members = new string[ArraySize * 3]; // C-STRING as requested by the brief   // USE CHAR!!!!!!!!!!!!!!!
   
 
-
-    cout << "\t\t\t\t                 o--o0o--o              " << endl;
+    
+    cout << "\n\n\t\t\t\t                 o--o0o--o              " << endl;
     cout << "\t\t\t\t   8=8==========LEADERBOARD==========8=8" << endl;
     cout << "\t\t\t\t    |  NAME                    SCORE  | " << endl;
     cout << "\t\t\t\t    |                                 | " << endl;
@@ -185,7 +181,7 @@ static void Yahtzee_Menu2() {
     delete(MembersData);
     MembersData = nullptr;
 
-    cout << "   o8========8o    o8============8o    o8=================8o    o8================8o     o8========8o" << endl;
+    cout << "\n\n   o8========8o    o8============8o    o8=================8o    o8================8o     o8========8o" << endl;
     cout << " (1) | PLAY |    (2) | REGISTER |    (3) | DELETE PLAYER |    (4) | SORT PLAYERS |     (9) | EXIT |  " << endl;
     cout << "   o8========8o    o8============8o    o8=================8o    o8================8o     o8========8o" << endl;
     // USE C-STRING "Members" TO FUTHER TAKE THE APPLICATION (TO LOGIN / DELETE / SORT PLAYERS)
@@ -256,21 +252,23 @@ static void Game() {
     const int Difficulty = 6; // dice rolls
 
     int SCORECARD[Difficulty];
+    fill_n(SCORECARD, Difficulty, 0);
+
+
 
     for (int x = 0; x < Difficulty; x++) {
         cout << " Dice Roll Set #"<< (x + 1) <<" of "<< Difficulty <<"\n";
         cout << "-------------------\n\n";
         cout << "--- SCORECARD ---\n";
 
-        cout << "\t Aces: " << SCORECARD[0] << "\n";
-        cout << "\t Twos: " << SCORECARD[1] << "\n";
-        cout << "\t Threes: " << SCORECARD[2] << "\n";
-        cout << "\t Fours: " << SCORECARD[3] << "\n";
-        cout << "\t Fives: " << SCORECARD[4] << "\n";
-        cout << "\t Sixes: " << SCORECARD[5] << "\n";
+        cout << " Aces: " << SCORECARD[0] << "\n";
+        cout << " Twos: " << SCORECARD[1] << "\n";
+        cout << " Threes: " << SCORECARD[2] << "\n";
+        cout << " Fours: " << SCORECARD[3] << "\n";
+        cout << " Fives: " << SCORECARD[4] << "\n";
+        cout << " Sixes: " << SCORECARD[5] << "\n";
         cout << "-----------------\n";
-        int Total = 0;
-        accumulate(SCORECARD, SCORECARD + Difficulty, Total);
+        int Total = 0; accumulate(SCORECARD, SCORECARD + Difficulty, Total);
         cout << "Total: " << Total << "\n";
         cout << "-----------------\n";
 
@@ -300,7 +298,7 @@ static void Game() {
             fill_n(CardFaces, 5, "");
             int LockSelection;
 
-            cout << "\n\n Enter card to lock or skip(0): ";
+            cout << "\n\n Enter card to lock/unlock or skip(0): ";
             cin >> LockSelection;
             while (LockSelection != 0) {
                 Dices[1][LockSelection-1] = 1;
