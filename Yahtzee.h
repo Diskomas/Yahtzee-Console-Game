@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <numeric>
 using namespace std;
+
 class Yahtzee
 {
 public:
@@ -22,12 +23,8 @@ public:
 	void Delete_draft();
 
 	void Display_Game(); // Display up to date game screen
+	void Display_End();
 	static void SetCardFaces(string(&Cards)[5], int RolledNumber, bool Occupation); // write cards for display
-	
-
-
-	// void SaveDraft(); // alow user to continue the game where left of
-
 
 
 private:

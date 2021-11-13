@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <numeric>
 #include <fstream>  
+#include <conio.h>
 
 using namespace std;
 
@@ -38,7 +39,9 @@ void Yahtzee::Play() {
 
     Game_Rolls = 0; // reset rolls (for next game)
     Delete_draft(); // remove draft 
-    // save game
+    Display_End();
+
+    // save game in history (database)
     
 
 }
@@ -107,7 +110,7 @@ void Yahtzee::Display_Game() {
     cout << "\t\t\t\t         |Dice Roll Set #" << Game_Rolls << " of " << 6 << "|\n";
     cout << "\t\t\t\t       o8=======================8o" << endl;
 
-    cout << "\n\t\t\t\t                 o--o0o--o              " << endl;
+    cout << "\n\t\t\t\t                o--o0o--o              " << endl;
     cout << "\t\t\t\t   8=8==========SCORECARD==========8=8" << endl;
     cout << "\t\t\t\t    |  NAME                  SCORE  | " << endl;
     cout << "\t\t\t\t    |                               | " << endl;
@@ -182,5 +185,30 @@ void Yahtzee::SetCardFaces(string(&Cards)[5], int RolledNumber, bool Occupation)
     default:
         break;
     }
+}
+
+void Yahtzee::Display_End() {
+    cout << "\n\n\n\t\t    o8=========================================================8o" << endl;
+    cout << "\t\t         ______     ______     ______     ______     ______    " << endl;
+    cout << "\t\t        /\\  ___\\   /\\  ___\\   /\\  __ \\   /\\  == \\   /\\  ___\\   " << endl;
+    cout << "\t\t        \\ \\___  \\  \\ \\ \\____  \\ \\ \\/\\ \\  \\ \\  __<   \\ \\  __\\   " << endl;
+    cout << "\t\t         \\/\\_____\\  \\ \\_____\\  \\ \\_____\\  \\ \\_\\ \\_\\  \\ \\_____\\ " << endl;
+    cout << "\t\t          \\/_____/   \\/_____/   \\/_____/   \\/_/ /_/   \\/_____/ \n" << endl;
+    cout << "\t\t    o8=========================================================8o\n\n" << endl;
+  
+    cout << "\n\t\t\t\t                o--o0o--o              " << endl;
+    cout << "\t\t\t\t   8=8==========SCORECARD==========8=8" << endl;
+    cout << "\t\t\t\t    |  NAME                  SCORE  | " << endl;
+    cout << "\t\t\t\t    |                               | " << endl;
+    cout << "\t\t\t\t    |  Aces:                  " << ScoreCard[0] << "     | " << endl;
+    cout << "\t\t\t\t    |  Twos:                  " << ScoreCard[1] << "     | " << endl;
+    cout << "\t\t\t\t    |  Threes:                " << ScoreCard[2] << "     | " << endl;
+    cout << "\t\t\t\t    |  Fours:                 " << ScoreCard[3] << "     | " << endl;
+    cout << "\t\t\t\t    |  Fives:                 " << ScoreCard[4] << "     | " << endl;
+    cout << "\t\t\t\t    |  Sixes:                 " << ScoreCard[5] << "     | " << endl;
+    cout << "\t\t\t\t    |                               | " << endl;
+    cout << "\t\t\t\t   8=8==========SCORECARD==========8=8" << "\n\n\n\n";
+
+    system("pause");
 }
 
